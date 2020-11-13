@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect, useHistory} from "react-router-dom";
 
 import BubblePage from "./components/BubblePage";
 import Login from "./components/Login";
@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
     	render={props => token ?
-        <Component {...props} />   :  <Redirect to="/" />
+        <Component {...props} />   :  <Redirect to="/fail" />
       }
     />
   )
@@ -20,18 +20,19 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 
 function App() {
 
+  const {push} = useHistory();
+
   function logout() {
     localStorage.clear()
-  }
+    push('/')
+  } 
 
   return (
-    <Router>
       <div className="App">
         <button onClick={logout}>Logout</button>
         <Route exact path="/" component={Login} />
         <PrivateRoute path='/protected' component={BubblePage} />
       </div>
-    </Router>
   );
 }
 

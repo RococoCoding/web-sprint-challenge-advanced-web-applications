@@ -19,7 +19,11 @@ const ColorList = ({ colors, updateColors }) => {
   const saveEdit = e => {
     e.preventDefault();
     axiosWithAuth().put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
-      .then(res => console.log(res))
+      .then(res => {
+        const newColors = [...colors];
+        newColors.splice(colorToEdit.id-1, 1, colorToEdit)
+        updateColors(newColors)
+      })
       .catch(err => console.log(err))
   };
 

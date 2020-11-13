@@ -11,20 +11,19 @@ const Login = () => {
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   const [input, setInput] = useState(initialInput)
-  const {push}= useHistory();
+  const {push} = useHistory();
 
   function changeHandler(e) {
     setInput({...input, [e.target.name]: e.target.value})
   }
 
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
-    axios.post('http://localhost:5000/api/login', input)
-      .then(res => {
-        localStorage.setItem('token', res.data.payload)
-        
-      })
-      .catch(err => console.log(err))
+    const axiosPost = await axios.post('http://localhost:5000/api/login', input)
+    .then(res => {
+      localStorage.setItem('token', res.data.payload)
+    })
+    .catch(err => console.log(err))
     push('/protected')
   }
 
