@@ -36,8 +36,9 @@ const Bubbles = ({ colors }) => {
                       cx={x}
                       cy={y}
                       r={r}
-                      fill={colors[i].code.hex}
-                    />
+                      fill={colors[i].code.hex}>
+                      {colors[i].color}
+                    </Circle>
                   );
                 }
                 return null;
