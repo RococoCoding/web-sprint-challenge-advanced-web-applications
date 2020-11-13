@@ -21,10 +21,11 @@ const Login = () => {
     e.preventDefault();
     axios.post('http://localhost:5000/api/login', input)
       .then(res => {
-        push('/protected')
         localStorage.setItem('token', res.data.payload)
+        
       })
       .catch(err => console.log(err))
+    push('/protected')
   }
 
   return (
